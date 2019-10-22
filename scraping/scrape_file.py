@@ -4,6 +4,10 @@ import time
 import re
 from tqdm import tqdm
 import json
+import os
+
+if not os.path.isdir('pages'):
+    os.mkdir('pages')
 
 
 def ner_extractor(text, ner):
@@ -15,7 +19,9 @@ def get_page(pool, url, ner):
   res = BeautifulSoup(r.read(), 'html.parser')
   r.release_conn()
   time.sleep(1)
-  ps = [x.text for x in res.find(id='mw-content-text').find_all('p')]
+  body = res.find(id='mw-content-text')
+  ps = [BeautifulSoup(x, 'html.parser').text for x in str(body).split('<h2>')]
+  ps = [re.sub('\[.*?\]', '', x) for x in ps]
   title = res.find(id='firstHeading').text
   if not re.search('/', title):
     for i, p in enumerate(ps):
@@ -29,10 +35,10 @@ def get_page(pool, url, ner):
         json.dump(output, f)
 
 
-with open('ner.json') as j:
+with open('scraping/ner.json') as j:
   full_ner = json.load(j)
 
-with open('minecraft_links.txt') as l:
+with open('scraping/minecraft_links.txt') as l:
   links = l.read().split('\n')
 
 http = urllib3.PoolManager()

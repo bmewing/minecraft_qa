@@ -1,3 +1,5 @@
 whoosh
 stop_words
 tqdm
+bs4
+urllib3
