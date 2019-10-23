@@ -1,3 +1,4 @@
+deeppavlov
 whoosh
 stop_words
 tqdm
