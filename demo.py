@@ -3,8 +3,6 @@
 from utils import search_index, BertSquad
 import argparse
 
-bert_squad = BertSquad()
-
 ap = argparse.ArgumentParser()
 ap.add_argument('-q', '--question', default='where can I find diamonds',
                 help='Question you want answered.')
@@ -14,7 +12,11 @@ ap.add_argument('-i', '--index', default='minecraft',
                 help='Name of whoosh index')
 ap.add_argument('-l', '--limit', default=5,
                 help='How many results to return?')
+ap.add_argument('--download', dest='download', action='store_true')
+ap.set_defaults(download=False)
 args = vars(ap.parse_args())
+
+bert_squad = BertSquad(download=args['download'])
 
 if __name__ == '__main__':
     relevant = search_index(question=args['question'],
