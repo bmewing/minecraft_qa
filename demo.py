@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/local/bin/python3.7
 
 from utils import search_index, BertSquad
 import argparse

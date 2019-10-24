@@ -1,6 +1,7 @@
-deeppavlov
+deeppavlov~=0.6
+tensorflow
 whoosh
 stop_words
-tqdm
+tqdm==4.32.2
 bs4
 urllib3
